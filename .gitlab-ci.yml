@@ -17,6 +17,7 @@ packing_app_and_deploy:
     # install dependencies
     - apt-get update && apt-get upgrade -y && apt-get install -y zip curl bash
     - curl https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash -s -- -i /opt/yc -n
+    # -- install poetry only for example, else delete if not needed
     - pip install poetry==1.8.2
     - poetry export -f requirements.txt --output requirements.txt --without-hashes
     # authentication in yandex cloud using the service account key
