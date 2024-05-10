@@ -1,0 +1,37 @@
+variables: 
+  FOLDER_ID: b1****************
+  FUNCTION_ID: d4***************
+  FUNCTION_RUNTIME: python312
+  FUNCTION_ENTRYPOINT: app.index.handler
+  FUNCTION_PATH_COMPONENTS: ./app ./requirements.txt
+  FUNCTION_EXECUTION_TIMEOUT: 200ms # Optional
+  FUNCTION_ENVIRONMENT: logging=WARNING # Optional
+
+stages:
+  - packing_app_and_deploy
+
+packing_app_and_deploy:
+  stage: packing_app_and_deploy
+  image: python:3.10.10-slim # or any other, say ubuntu:22.04, if python is not needed
+  before_script:
+    # install dependencies
+    - apt-get update && apt-get upgrade -y && apt-get install -y zip curl bash
+    - curl https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash -s -- -i /opt/yc -n
+    - pip install poetry==1.8.2
+    - poetry export -f requirements.txt --output requirements.txt --without-hashes
+    # authentication in yandex cloud using the service account key
+    - echo "${SA_YC_PRIVATE_KEY}" > key.json
+    - /opt/yc/bin/yc config profile create sa-profile
+    - /opt/yc/bin/yc config set service-account-key key.json
+  script:
+    - zip -r function-components.zip ${FUNCTION_PATH_COMPONENTS}
+    - >
+      /opt/yc/bin/yc serverless function version create
+      --source-path function-components.zip
+      --function-id ${FUNCTION_ID} --folder-id ${FOLDER_ID}
+      --execution-timeout ${FUNCTION_EXECUTION_TIMEOUT} --environment ${FUNCTION_ENVIRONMENT}
+      --runtime ${FUNCTION_RUNTIME} --entrypoint ${FUNCTION_ENTRYPOINT}
+  timeout: 1h
+  only:
+    refs: 
+      - main
