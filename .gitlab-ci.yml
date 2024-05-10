@@ -12,7 +12,7 @@ stages:
 
 packing_app_and_deploy:
   stage: packing_app_and_deploy
-  image: python:3.10.10-slim # or any other, say ubuntu:22.04, if python is not needed
+  image: python:3.10.10-slim # or any other, say, pure ubuntu:22.04, if python is not needed
   before_script:
     # install dependencies
     - apt-get update && apt-get upgrade -y && apt-get install -y zip curl bash
