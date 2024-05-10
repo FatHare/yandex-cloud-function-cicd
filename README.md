@@ -1,4 +1,4 @@
-# Template gitlab CI/CD for yandex cloud function.
+### Template gitlab CI/CD for yandex cloud function.
 
 Steps:
 
@@ -7,3 +7,5 @@ Steps:
 2. Fill in the variables in the .gitlab-ci.yml file
 
 3. Done.
+
+#### Did it help? Please give it a star.
