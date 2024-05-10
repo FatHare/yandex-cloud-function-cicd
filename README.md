@@ -17,7 +17,7 @@ Steps:
 }
 ```
 
-3. Fill in the variables in the .gitlab-ci.yml file
+3. Fill in the variables in the .gitlab-ci.yml file.
 
 4. Done.
 
