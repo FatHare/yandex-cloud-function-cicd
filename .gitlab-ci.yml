@@ -3,7 +3,7 @@ variables:
   FUNCTION_ID: d4***************
   FUNCTION_RUNTIME: python312
   FUNCTION_ENTRYPOINT: app.index.handler
-  FUNCTION_PATH_COMPONENTS: ./app ./requirements.txt # Paths to all files separated by spaces that need to be copied into the function
+  FUNCTION_PATH_COMPONENTS: ./app ./requirements.txt # Paths to all folders/files separated by spaces that need to be copied into the function
   FUNCTION_EXECUTION_TIMEOUT: 200ms # Optional
   FUNCTION_ENVIRONMENT: logging=WARNING # Optional
 
